@@ -1,0 +1,101 @@
+*{
+    box-sizing: border-box;
+    
+}
+body{
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+.container{
+    width: 100%;
+    height: 100%;
+}
+.inner-cont{
+    position: relative;
+    margin: 0 auto;
+    border: solid 2px;
+    max-width: 2000px;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: hidden;
+    
+}
+.inner-cont::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(../image/PT1021-USP-Compendia-Update.webp);
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+}
+.cover{
+    position: relative; 
+    width: 100%;
+    height: 100%;  
+    padding: 100px;
+}
+.login{
+    
+    background-color: rgba(0, 0, 0, 0.3); 
+    height: 100%;
+    padding: 50px;
+    border-radius: 10px;
+    width: 400px;
+    margin: 0 auto;
+    
+}
+.login p{
+    margin-right: 150px;
+    color: white;
+    font-weight: bold;
+}
+.login input{
+    height: 30px;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.3); 
+    border: none;
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+}
+button{
+    background-color: rgba(0, 0, 0, 0.3); 
+    height: 30px;
+    width: 100px;
+    border-color: white;
+    color: white;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 5px;
+    
+}
+.but:hover{
+    background-color: white;
+    color: black;
+}
+.rejis:hover{
+    background-color: white;
+    color: black;
+}
+.cover h1,.cover h2{
+    color: rgb(167, 160, 160);
+    margin-bottom: 40px;
+}
+.cover h2{
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    margin-bottom: 80px;
+}
+.buts{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-evenly;
+}
+

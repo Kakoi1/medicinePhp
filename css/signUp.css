@@ -1,0 +1,75 @@
+*{
+    font-family: 'Libre Baskerville', serif;
+    transition: all 1s ease;
+    animation: 1s ease-in 0s 1 slideInLeft;
+}
+@keyframes slideInLeft {
+    0% {
+      opacity: 0;
+     
+    }
+    100% {
+      opacity: 1;
+      
+    }
+  }
+.overlay{
+   position: fixed;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background: rgba(0, 0, 0, 0.7);
+   transition: opacity 500ms;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+    display: none;
+}
+
+
+.wrap{
+    background-color: rgba(216, 208, 208, 0.781);
+    border-radius: 8px;
+    height: auto;
+    width: auto;
+    padding: 10px;
+    margin: 0 auto;
+    padding: 30px;
+}
+.form{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+justify-content: space-evenly;
+height: 400px;
+background-color: rgba(0, 0, 0, 0.1);
+
+}
+.form input{
+    height: 30px;
+    width: 300px;
+    border-radius: 5px;
+    border-color: black;
+    background-color: rgba(255, 255, 255, 0.7);
+    font-weight: bold;
+    text-align: center;
+}
+.submits{
+    width: 150px !important;
+    cursor: pointer;
+    color: rgb(107, 104, 104);
+}
+.submits:hover{
+    color: black;
+}
+@media screen and (max-width: 540px){
+    .form input{
+        width: 100% !important;
+    }
+    
+}
+.wrap img{
+    float: right;
+}

@@ -1,0 +1,225 @@
+*{
+  font-family: 'Libre Baskerville', serif;
+  transition: all 1s ease;
+  animation: 1s ease-in 0s 1 slideInLeft;
+}
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+   
+  }
+  100% {
+    opacity: 1;
+    
+  }
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 20px;
+}
+
+h2 {
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: solid 5px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+.nabar{  
+    background-color: #fc4311;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: hidden;
+  }
+  .nabar a , .nabar p{
+    text-decoration: none;
+    display: inline-block;
+    color: white ;
+    padding: 0px 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    
+  }
+  .nabar p{
+    margin-right: 100px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+    font-size: 23px;
+  }
+  .home{
+    color: black !important;
+    
+  }
+  .sear{
+    position: relative; top: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+  .inner{
+    max-width: 1800px;
+    width: 98%;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1px solid;
+    overflow: hidden;
+  }
+  .searchCon, .searchCon1{
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .searchCon1{
+    padding: 10px;
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .searchCon input{
+    width: 300px;
+    height: 40px;
+    text-align: center;
+    border-radius: 0px 10px 10px 0px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .searchCon button, .searchCon1 button{
+    width: 90px;
+    height: 44px;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .genPort{
+    background-color: green;
+    color: white;
+  }
+  .searchCon button:hover, .searchCon1 button:hover{
+    color: white;
+    background-color: black;
+    box-shadow: 2px 1px 4px 3px;
+  }
+  .reportGen{
+    height: 500px;
+    width: 500px;
+    position: fixed;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+    background: #333;
+    padding: 20px;
+  }
+  .overlay{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    display: none;
+    justify-content: center;
+    align-items: center;
+     
+     
+ }
+ .reportGen{
+  background-color: rgba(216, 208, 208);
+  border-radius: 8px;
+  height: 70%;
+  max-height: 1500px;
+  width: 800px;
+  padding: 10px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-top: 120px;  
+  overflow: auto;
+ }
+ .overlay img{
+  float: right;
+  margin-bottom: 20px;
+}
+.reportGen label{
+  font-size: 19px;
+  font-weight: bold;
+}
+.userHistory{
+  background-color: rgba(216, 208, 208);
+  border-radius: 8px;
+  height: 70%;
+  max-height: 1500px;
+  width: 800px;
+  padding: 10px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-top: 120px;  
+  overflow: auto;
+}
+.overlayHisto{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  display: none;
+  justify-content: center;
+  align-items: center;   
+}
+.divi{
+  display: flex;
+ align-items: center;
+ justify-content: space-between;
+ /* width: 100%; */
+ padding: 0px 10px 0px 0px;
+}
+.userHisto{
+  width: 100px;
+  height: 44px;
+  border-radius: 10px 10px 10px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  display: none;
+}
+.userHisto:hover{
+  color: white;
+  background-color: black;
+  box-shadow: 2px 1px 4px 3px;
+}

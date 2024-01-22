@@ -1,0 +1,114 @@
+*{
+    font-family: 'Libre Baskerville', serif;
+    transition: all 1s ease;
+    animation: 1s ease-in 0s 1 slideInLeft;
+}
+@keyframes slideInLeft {
+    0% {
+      opacity: 0;
+     
+    }
+    100% {
+      opacity: 1;
+      
+    }
+  }
+.medForm{
+ width: 100%;
+ height: 100%;
+ padding: 20px;
+ line-height: 2;
+}
+.medForm input{
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.submitBut{
+    display: flex; 
+     justify-content: space-evenly; 
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+}
+select{
+    width: 300px;
+    height: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.medForm label{
+    font-size: 18px;
+    font-weight: bold;
+}
+.right, .left{
+    width: 50%;
+    height: 100%;
+    float: left;
+}
+.submitBut input{
+    width: 100px;
+    font-size: 15px;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+    
+}
+.add{
+    color: white;
+    background-color: green;
+    box-shadow: 2px 1px 4px 3px;
+}
+.add:hover{
+    background-color: white;
+    color: green;
+    
+}
+.update{
+    color: white;
+    background-color: skyblue;
+    box-shadow: 2px 1px 4px 3px;
+}
+.update:hover{
+    background-color: white;
+    color: skyblue;
+}
+.delete{
+    color: white;
+    background-color: red;
+    box-shadow: 2px 1px 4px 3px;
+}
+.delete:hover{
+    background-color: white;
+    color: red;
+}
+.clear{
+    color: white;
+    background-color: yellow;
+    box-shadow: 2px 1px 4px 3px;
+}
+.clear:hover{
+    background-color: white;
+    color: yellow;
+}
+.Buy{
+    color: white;
+    background-color: skyblue;
+    box-shadow: 2px 1px 4px 3px;
+}
+.Buy:hover{
+    background-color: white;
+    color: skyblue;
+}
+.cancel{
+    color: white;
+    background-color: red;
+    box-shadow: 2px 1px 4px 3px;
+}
+.cancel:hover{
+    background-color: white;
+    color: red;
+}
