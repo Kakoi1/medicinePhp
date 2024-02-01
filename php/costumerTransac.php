@@ -23,8 +23,8 @@ $result = $conn->query($sql);
 
      <!-- User Validation if user is Admin -->
     <?php 
-    session_start();
-    $admin =  $_SESSION['user_name'];
+  if (isset($_COOKIE['user'])) {
+    $admin = $_COOKIE['user'];
 
     if ($admin === 'admin'){
         echo '<script>
@@ -34,6 +34,7 @@ $result = $conn->query($sql);
             });
           </script>';
     }
+}
     ?>
 
 </head>
@@ -45,17 +46,20 @@ $result = $conn->query($sql);
 <div class="nabar">
     <p>Manage Inventory</p>
     <a class="home" href="dashboard.php">HOME</a>
-    <a href="mangeStock.php">Manage Inventory</a>
+    <a id="manage" href="mangeStock.php">Manage Inventory</a>
     <a style="display: none;" id="report" href="report.php">Sales Report</a>
     <a style="display: none;" id="suplier" href="supplier.php">Suppliers</a>
     <a id="account" href="login.php">Log Out</a>
   </div>
-  <form  id="searchForm">
-    <div class="searchCon">
-  <button type="button" onclick="performsear()" class="search" id="search" name="search">Search</button>
-  <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
-  </div>
-  </form>
+  <div class="divi">
+    <form  id="searchForm">
+      <div class="searchCon">
+    <button type="button" onclick="performSearch()" class="search" id="search" name="search">Search</button>
+    <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
+    </div>
+    </form>
+   
+    </div>
   
   <div id="tableData">
   <table id="Datatable">
@@ -66,6 +70,7 @@ $result = $conn->query($sql);
             <th>Quantity</th>
             <th>Status</th>
             <th>Expire Date</th>
+            <th>Click</th>
         </tr>
 
         <?php
@@ -78,6 +83,7 @@ $result = $conn->query($sql);
                 echo "<td>" . $row["Med_Quantity"] . "</td>";
                 echo "<td>" . $row["Med_status"] . "</td>";
                 echo "<td>" . $row["Med_ExpDate"] . "</td>";
+                echo "<td> <button class='addMed' id='addMed' onclick='openTransac()'>Buy</button></td>";
                 echo "</tr>";
             }
         } else {
@@ -86,9 +92,11 @@ $result = $conn->query($sql);
         ?>
     </table>
     </div>
-        <div class="medForm">
+    <div class="medTransac" id="medTransac">
+        <div class="transacForm">
+        <h1>Add Transaction</h1>
         <form id="MedForm" action="transacCode.php" method="post">
-            <div class="left">
+           <div class="right">
         <label for="medId">Medicine ID:</label>
             <input id="medId" name="medId" class="medId" type="text" readonly>
 
@@ -100,18 +108,20 @@ $result = $conn->query($sql);
 
             <label for="quantity">Medicine Quantity:</label>
             <input id="quantity" name="quantity" class="quantity" type="number" required readonly>
-            </div>
-        <div class="right">
             <label for="status">Status:</label><br>
+            <input id="status" name="status" class="status" type="text" required readonly>
+
+            <label for="expD">Expire Date:</label>
+            <input id="expD" name="expD" class="expD" type="date" required readonly>
+            
+            </div>
+          
            <!-- <select name="status" id="status" class="status" readonly>
                 <option value="out of stock">Out of Stock</option>
                 <option value="available">Available</option>
            </select><br> -->
-           <input id="status" name="status" class="status" type="text" required readonly>
-
-           <label for="expD">Expire Date:</label>
-            <input id="expD" name="expD" class="expD" type="date" required readonly>
-      
+          
+            <div class="left">
             <label for="quanBuy">Quantity :</label>
             <input id="quanBuy" name="quanBuy" class="quanBuy" type="number" required oninput="calculateTotalPrice()">
         
@@ -123,44 +133,21 @@ $result = $conn->query($sql);
 
             <label for="change">Change:</label>
             <input id="change" name="change" class="change" type="number" required readonly>
+            <br>
             </div>
         <div class="submitBut">
 
-            <input id="Buyin" name="Buyin" class="Buyin" type="submit" value="Buy">
-            <input id="cancel" name="cancel" class="cancel" type="submit" value="cancel">
+            <input id="Buyin" name="Buyin" class="add" type="submit" value="Buy">
+            <input id="cancel" name="cancel" class="cancel" type="submit" value="cancel" onclick="closeTransac()">
             <input id="clear" name="clear" class="clear" type="submit" value="clear">
 
         </div>
         </form>
         </div>
+        </div>
     </div>
 </div>
-<script src="..//script/manage.js">
-   
-
-                // Get the data from the clicked row
-
-
-                // var row = event.target.parentNode;
-                // var id = row.cells[0].innerText;
-                // var name = row.cells[1].innerText;
-                // var price = row.cells[2].innerText;
-                // var quantity = row.cells[3].innerText;
-                // var status = row.cells[4].innerText;
-                // var dates = row.cells[5].innerText;
-
-                // Fill the input fields with the data
-                // document.getElementById('medID').value = cells[0].innerText;
-                // document.getElementById('medName').value = cells[1].innerText;
-                // document.getElementById('price').value = cells[2].innerText;
-                // document.getElementById('quantity').value = cells[3].innerText;
-                // document.getElementById('status').value = cells[4].innerText;
-                // document.getElementById('expD').value = cells[5].innerText;
-
-          
-</script>
-<script src="..//script/transSearch.js">
-</script> 
+<script src="..//script/manage.js"></script>
 <script>
   
     function calculateTotalPrice() {
@@ -197,5 +184,7 @@ $result = $conn->query($sql);
     Buyin.addEventListener('click', calculateChange);
     
 </script> 
+<script src="..//script/signup.js"></script>
+<script src="..//script/search.js"></script>
 </body>
 </html>

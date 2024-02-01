@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +28,9 @@
   <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
   </div>
   </form> -->
-
+  <div class="supAdd">
+  <button class="addMed" id="addMed" onclick="openSupadd()">Add Supplier</button>
+  </div>
 <?php
 
     $servername = "localhost";
@@ -54,6 +55,7 @@
             <th>Address</th>
             <th>Contact No.</th>
             <th>Email</th>
+            <th></th>
            
         </tr>
 
@@ -67,7 +69,8 @@
                 echo "<td>" . $row["sup_Address"] . "</td>";
                 echo "<td>" . $row["sup_Contact_no."] . "</td>";
                 echo "<td>" . $row["sup_email"] . "</td>";
-               
+                echo "<td> <div class ='butoon'><button id = 'edit' class = 'editButon' onclick='openSupForm()'>Edit</button>   
+                </div></td>";
                 echo "</tr>";
             }
         } else {
@@ -76,9 +79,13 @@
         ?>
     </table>
     </div>
+    <div class="overlaySup" id="overlaySup">
+        
     <div class="medForm">
+    <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" id="closing" onclick="closeSupForm()">
+    <h1> Supplier Form</h1>
         <form id="MedForm" action="manageSupplier.php" method="post">
-            <div class="left">
+           
         <label for="supId">Supplier ID:</label>
             <input id="supId" name="supId" class="medId" type="text" readonly>
 
@@ -90,10 +97,10 @@
 
             <label for="cont">Contact no.:</label>
             <input id="cont" name="cont" class="quantity" type="text" required>
-            </div>
+           
             <label for="email">Email:</label>
             <input id="email" name="email" class="quantity" type="text" required>
-            </div>
+           <br>
        
         <div class="submitBut">
 
@@ -106,7 +113,7 @@
         </form>
         </div>
     </div>
-       
+    </div>
     </div>
 </div>
 <script src="..//script/manageSup.js"></script>

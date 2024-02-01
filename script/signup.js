@@ -20,4 +20,30 @@ function closeHistory(){
   
 }
 
- 
+
+function openTransac(){
+  document.getElementById('medTransac').style.display = 'flex';
+  document.getElementById('medId').value = '';
+  document.getElementById('medName').value = '';
+  document.getElementById('price').value = '';
+  document.getElementById('quantity').value = '';
+  document.getElementById('status').value = '';
+  document.getElementById('expD').value = '';
+  document.getElementById('quanBuy').value = '';
+  document.getElementById('tPrice').value = '';
+  document.getElementById('cash').value = '';
+  document.getElementById('change').value = '';
+}
+function closeTransac(){
+  document.getElementById('medTransac').style.display = 'none';
+  document.getElementById('medId').value = '';
+  document.getElementById('medName').value = '';
+  document.getElementById('price').value = '';
+  document.getElementById('quantity').value = '';
+  document.getElementById('status').value = '';
+  document.getElementById('expD').value = '';
+  document.getElementById('quanBuy').value = '';
+  document.getElementById('tPrice').value = '';
+  document.getElementById('cash').value = '';
+  document.getElementById('change').value = '';
+}

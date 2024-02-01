@@ -24,6 +24,7 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
     <title>Document</title>
    <link rel="stylesheet" type="text/css" href="..//css/mainTable.css?v=1"/>
    <link rel="stylesheet" type="text/css" href="..//css/manage.css?v=1" />
+   <link rel="stylesheet" type="text/css" href="..//css/tabStyle.css?v=1"/>
 </head>
 <body>
 <div class="container">
@@ -45,16 +46,24 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
   <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
   </div>
   </form> -->
-  <div class="searchCon1">
-    <button class="genPort" id="genPort" onclick="openReport()">Generate report</button>
-    <form action="transacCode.php" method="post">
-    <button class="delete" name="delete" id="delete">Delete</button>
-    <input  class="inputSearch" id="inputSearch" name="inputSearch" type="hidden" readonly>
-    </form>
-  </div>
+  
 
   <div id="tableData">
-  <table id="Datatable">
+
+
+
+  <div class="tabs">
+                <div class="tab" onclick="showTab(1)">Sales</div>
+                <div class="tab" onclick="showTab(2)">Approaching expiry date</div>
+                <div class="tab" onclick="showTab(3)">Medicine With low stock</div>
+            </div>
+
+            <div class="content">
+                <div class="tab-content tab1-content active">
+
+             
+
+                <table id="Datatable">
         <tr>
             <th>Transaction Id</th>
             <th>Medicine Id</th>
@@ -88,18 +97,21 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
             echo "<tr><td colspan='3'>No data found</td></tr>";
         }
         ?>
-    </table>
+        </table>
+                 
+        <div class="searchCon1">
+    <button class="genPort" id="genPort" onclick="openReport()">Generate report</button>
+    <form action="transacCode.php" method="post">
+    <button class="delete" name="delete" id="delete">Delete</button>
+    <input  class="inputSearch" id="inputSearch" name="inputSearch" type="hidden" readonly>
+    </form>
     </div>
-
-    </div>
-</div>
-
-
-
-
-<div class="overlay" id="overHer">
-
-    <?php 
+            
+                </div>
+                
+                <div class="tab-content tab2-content">
+                 
+                <?php 
         $conn = new mysqli("localhost", "root", "", "medicine_inventory");
 
         if ($conn->connect_error) {
@@ -112,8 +124,6 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
         $resulti = $conn->query($sqli);
     ?>
 
-        <div class="reportGen">
-        <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" id="closing" onclick="closeReport()">
         <label for="tables">Medicines with expiry dates approaching:</label>
             <table class="tableData" name="tables" id="tables">
                 <tr>
@@ -141,7 +151,10 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
 
             </table>
 
-    <?php 
+                </div>
+
+                <div class="tab-content tab3-content">
+                <?php 
         $conn = new mysqli("localhost", "root", "", "medicine_inventory");
 
         if ($conn->connect_error) {
@@ -182,55 +195,95 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
     ?>
 
             </table>
+                
+    </div>
+   
+    </div>
 
-            <?php 
-        $conn = new mysqli("localhost", "root", "", "medicine_inventory");
+ 
+    </div>
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        $lowStock = 10;
+    </div>
+</div>
 
-        $sqli = "SELECT * FROM med_inventory ";
 
-        $resulti = $conn->query($sqli);
-    ?>
+
+
+<div class="overlay" id="overHer">
+
+<?php 
+
+$conn = new mysqli("localhost", "root", "", "medicine_inventory");
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_name,
+        med_inventory.Med_price, med_inventory.Med_ExpDate, transactions.trans_quan,
+        transactions.trans_total, accounts.Acc_Id, accounts.Acc_username,
+        transactions.trans_date FROM transactions
+        JOIN med_inventory ON transactions.Med_Id = med_inventory.Med_Id
+        JOIN accounts ON transactions.Acc_Id = accounts.Acc_Id";
+    $result = $conn->query($sql);
+
+?>
+
+        <div class="reportGen">
+        <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" id="closing" onclick="closeReport()">
+
+      
+
+        <label for="tables">Calculate daily Sales</label>
+        <div class="divCal">
+        <form method="post" action="salesReport.php">
             <br>
-            <label for="tables">Medicines Current Stock:</label>
-
-            <table id="Datatable">
+            <p style="display:inline">From</p>
+                <input id="startDate" name="startDate" class="expD" type="date" required placeholder="Start Date">
+                <p style="display:inline"> to </p>
+                <input id="endDate" name="endDate" class="expD" type="date" required placeholder="End Date">
+                <input type="submit" value="Calculate">
+                </form>
+            </div>
+        <table id="Datatable">
         <tr>
-            <th>Med_id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            <th>Expire Date</th>
-            <th>Supplier Id</th>
-
+            <th>Transaction Id</th>
+            <th>Medicine Id</th>
+            <th>Medicine Name</th>
+            <th>Medicine Price</th>
+            <!-- <th>Expire Date</th> -->
+            <th>Acc Id</th>
+            <th>Acc Name</th>
+            <th>Total Price</th>
+            <th>Quantity Sold</th>
+            <th>Date</th>
         </tr>
 
         <?php
-        if ($resulti->num_rows > 0) {
-            while ($row = $resulti->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $row["Med_Id"] . "</td>" ;
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr onclick=\"idtoDelete(" . $row["trans_id"] . ")\">";
+                echo "<td>" . $row["trans_id"] . "</td>" ;
+                echo "<td>" . $row["Med_Id"] . "</td>";
                 echo "<td>" . $row["Med_name"] . "</td>";
                 echo "<td>" . $row["Med_price"] . "</td>";
-                echo "<td>" . $row["Med_Quantity"] . "</td>";
-                echo "<td>" . $row["Med_status"] . "</td>";
-                echo "<td>" . $row["Med_ExpDate"] . "</td>";
-                echo "<td>" . $row["sup_Id"] . "</td>";
+                // echo "<td>" . $row["Med_ExpDate"] . "</td>";
+                echo "<td>" . $row["Acc_Id"] . "</td>";
+                echo "<td>" . $row["Acc_username"] . "</td>";
+                echo "<td>" . $row["trans_total"] . "</td>";
+                echo "<td>" . $row["trans_quan"] . "</td>";
+                echo "<td>" . $row["trans_date"] . "</td>";
                 echo "</tr>";
             }
         } else {
             echo "<tr><td colspan='3'>No data found</td></tr>";
         }
         ?>
-    </table>
-</div>
-</div>
-
+        </table>
+        <br>
+   
+        </div>
+        </div>
 
 
 

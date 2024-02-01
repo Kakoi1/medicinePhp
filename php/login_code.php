@@ -37,7 +37,7 @@ $conn = mysqli_connect("localhost", "root", "");
             session_start();
             $_SESSION['user_id'] = $id;
             $_SESSION['user_name'] = $username;
-            
+            setcookie('user', $username, time() + 24*3600, '/');
 
             header('Location: dashboard.php');
 

@@ -23,19 +23,22 @@ $result = $conn->query($sql);
 
     <!-- User Validation if user is Admin -->
     <?php 
-    session_start();
-    $admin =  $_SESSION['user_name'];
-
-    if ($admin === 'admin'){
-        echo '<script>
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("report").style.display = " inline-block";
-                document.getElementById("suplier").style.display = " inline-block";
-            });
-          </script>';
+    // session_start();
+    if (isset($_COOKIE['user'])) {
+        $admin = $_COOKIE['user'];
+    
+        if ($admin === 'admin'){
+            echo '<script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("report").style.display = " inline-block";
+                    document.getElementById("suplier").style.display = " inline-block";
+                });
+              </script>';
+        }
     }
+  
+   
     ?>
-
 
 </head>
 <body>
@@ -52,12 +55,16 @@ $result = $conn->query($sql);
     <a id="account" href="login.php">Log Out</a>
     
   </div>
-  <form  id="searchForm">
-    <div class="searchCon">
-  <button type="button" onclick="performSearch()" class="search" id="search" name="search">Search</button>
-  <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
-  </div>
-  </form>
+  <div class="divi">
+    <form  id="searchForm">
+      <div class="searchCon">
+    <button type="button" onclick="performSearch()" class="search" id="search" name="search">Search</button>
+    <input  class="inputSearch" id="inputSearch" name="inputSearch" type="text" required>
+    </div>
+    </form>
+    <button class="addMed" id="addMed" onclick="openMedadd()">Add Medicine</button>
+    </div>
+ 
   
   <div id="tableData">
   <table id="Datatable">
@@ -69,6 +76,7 @@ $result = $conn->query($sql);
             <th>Status</th>
             <th>Expire Date</th>
             <th>Supplier Id</th>
+            <th></th>
 
         </tr>
 
@@ -83,6 +91,8 @@ $result = $conn->query($sql);
                 echo "<td>" . $row["Med_status"] . "</td>";
                 echo "<td>" . $row["Med_ExpDate"] . "</td>";
                 echo "<td>" . $row["sup_Id"] . "</td>";
+                echo "<td> <div class ='butoon'><button id = 'edit' class = 'editButon' onclick='openMedupdate()'>Edit</button>   
+                </div></td>";
                 echo "</tr>";
             }
         } else {
@@ -91,11 +101,14 @@ $result = $conn->query($sql);
         ?>
     </table>
     </div>
+    <div class="overlayMed" id="overlayMed">
         <div class="medForm">
+        <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" id="closing" onclick="closeMedupdate()">
+            <h1>Medicine Form</h1>
         <form id="MedForm" action="manage_code.php" method="post">
-            <div class="left">
+
         <label for="medId">Medicine ID:</label>
-            <input id="medId" name="medId" class="medId" type="text" readonly>
+            <input id="medId" name="medId" class="medId" type="text" readonly >
 
             <label for="cars">Medicine Name:</label>
             <input id="medName" name="medName" class="medName" type="text" required>
@@ -105,8 +118,8 @@ $result = $conn->query($sql);
 
             <label for="quantity">Medicine Quantity:</label>
             <input id="quantity" name="quantity" class="quantity" type="number" required oninput="statChange()">
-            </div>
-        <div class="right">
+            
+
             <label for="status">Status:</label><br>
            <select name="status" id="status" class="status">             
                 <option value="Available">Available</option>
@@ -118,23 +131,23 @@ $result = $conn->query($sql);
 
          <label for="">Supplier:</label> 
          <br>  
-    <?php
+        <?php
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "medicine_inventory";
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "medicine_inventory";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
 
-    $sql = "SELECT `sup_Id`, `sup_Company` FROM `supplier`";
-    $result = $conn->query($sql);
+        $sql = "SELECT `sup_Id`, `sup_Company` FROM `supplier`";
+        $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
 
         echo "<select name='supply' id = 'supply'>";
     
@@ -144,14 +157,14 @@ $result = $conn->query($sql);
     
 
         echo "</select>";
-    } else {
+     } else {
         echo "No results found";
-    }
+        }
     
-    $conn->close();
-    ?>
+        $conn->close();
+        ?>
 
-            </div>
+        
 
         <div class="submitBut">
 
@@ -159,10 +172,10 @@ $result = $conn->query($sql);
             <input id="update" name="update" class="update" type="submit" value="update">
             <input id="delete" name="delete" class="delete" type="submit" value="delete">
             <input id="clear" name="clear" class="clear" type="submit" value="clear">
-
+            </form>
         </div>
-        </form>
         </div>
+    </div>
     </div>
 </div>
 <script src="..//script/manage.js"></script>

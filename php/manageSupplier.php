@@ -16,16 +16,18 @@
   return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
- if ($result->num_rows > 0) {
+
+ if (validateEmail($email)) {
+  
+ if(isset($_POST['add'])){
+ 
+  if ($result->num_rows > 0) {
     $dupliAlert = true;
  }
  
 
 else{
- if (validateEmail($email)) {
-  
- if(isset($_POST['add'])){
- 
+
    $sql = "INSERT INTO `supplier`( `sup_Company`, `sup_Address`, `sup_Contact_no.`, `sup_email`) VALUES ('$company','$address','$contact','$email')";
  
    if(mysqli_query($conn, $sql)){
@@ -59,21 +61,22 @@ else{
  $sqli= "SELECT * FROM `supplier` WHERE `sup_Company`='$company'";
  $result= $conn->query($sqli);
 
-if ($result->num_rows > 0) {
-    $dupliAlert = true;
 
- }
-else if($supId == ''){
-    $showAlert = true;
- }
-
- else{
 
    if (validateEmail($email)) {
     
 
     if(isset($_POST['update'])){
+
+      if ($result->num_rows > 0) {
+        $dupliAlert = true;
     
+     }
+    else if($supId == ''){
+        $showAlert = true;
+     }
+    
+     else{
         $sql = "UPDATE `supplier` SET `sup_Company`='$company',`sup_Address`='$address',`sup_Contact_no.`='$contact',`sup_email`='$email' WHERE `sup_Id`='$supId'";
       
         if(mysqli_query($conn, $sql)){
@@ -99,12 +102,14 @@ $db = mysqli_select_db($conn, "medicine_inventory");
 
 $supId = $_POST['supId'];
 
+
+  if(isset($_POST['delete'])){
+    
+    
   if($supId == ''){
     $showAlert = true;
   }else{
 
-  if(isset($_POST['delete'])){
- 
     $sql = "DELETE FROM `supplier` WHERE `sup_Id`= '$supId'";
 
   
@@ -126,7 +131,7 @@ $supId = $_POST['supId'];
 <?php
     // Display JavaScript alert if the flag is set
     
-    if(($dupliAlert) && $dupliAlert) 
+    if(isset($dupliAlert) && $dupliAlert) 
     {
         echo "<script>alert('Company name already exist'); window.history.back();</script>";
     }

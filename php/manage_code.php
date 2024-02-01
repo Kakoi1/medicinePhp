@@ -17,25 +17,29 @@
 
  if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $expD)) {
 // name validation
- if ($result->num_rows > 0) {
-    $dupliAlert = true;
+
+
+ if(isset($_POST['add'])){
+  
+  if ($result->num_rows > 0) {
+    // $dupliAlert = true;
+    echo "<script>alert('medicine name already exist'); window.history.back();</script>";
  } 
 //  date validation
  else if ($expD <= $currentDate) {
-  $showDate = true;
+  // $showDate = true;
   $message1 = 'Invalid Date Inputed';
+  echo "<script>alert('Invalid Date Inputed'); window.history.back();</script>";
  }
 // quantity validation and price
  else if ($quantity <= 0){
-  echo '<script>alert("Invalid Quantity Inputed!")</script>';
+  echo '<script>alert("Invalid Quantity Inputed!"); window.history.back();</script>';
  }
  else if ($price <= 0){
-  echo '<script>alert("Invalid Price Inputed!")</script>';
+  echo '<script>alert("Invalid Price Inputed!"); window.history.back();</script>';
  }
  else{
 
- if(isset($_POST['add'])){
- 
    $sql = "INSERT INTO `med_inventory`(`Med_name`, `Med_price`, `Med_Quantity`, `Med_status`, `Med_ExpDate`, `sup_Id`) VALUES ('$medname','$price','$quantity','$status','$expD', '$supId')";
  
    if(mysqli_query($conn, $sql)){
@@ -71,26 +75,34 @@
 
  if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $expD)) {
   // name validation
-   if ($result->num_rows > 0) {
-      $dupliAlert = true;
-   } 
-  //  date validation
-   else if ($expD <= $currentDate) {
-    $dateAlert = true;
-    $message = 'Invalid Date Inputed';
-}
-  // ID validation
- elseif($medId == ''){
-    $showAlert = true;
-    $message = 'Select An item First';
- }
- else if ($price <= 0){
-  echo '<script>alert("Invalid Price Inputed!")</script>';
- }
- else{
+ 
 
  if(isset($_POST['update'])){
- 
+  
+  if ($result->num_rows > 0) {
+    // $dupliAlert = true;
+    echo "<script>alert('medicine name already exist'); window.history.back();</script>";
+ } 
+//  date validation
+ else if ($expD <= $currentDate) {
+  // $dateAlert = true;
+  // $message = 'Invalid Date Inputed';
+  echo "<script>alert('Invalid Date Inputed'); window.history.back();</script>";
+}
+// ID validation
+elseif($medId == ''){
+  // $showAlert = true;
+  // $message = 'Select An item First';
+  echo "<script>alert('Select An item First'); window.history.back();</script>";
+}
+else if ($price <= 0){
+echo '<script>alert("Invalid Price Inputed!");  window.history.back()</script>';
+}
+else if ($quantity <= 0){
+echo '<script>alert("Invalid Quantity Inputed!"); window.history.back();</script>';
+}
+else{
+
    $sql = "UPDATE `med_inventory` SET `Med_name` =  '$medname' ,`Med_price`= $price ,`Med_Quantity`= $quantity ,`Med_status`= '$status',`Med_ExpDate`= '$expD',  `sup_Id` = '$supId' WHERE `Med_Id`= '$medId' ";
  
    if(mysqli_query($conn, $sql)){
@@ -114,13 +126,17 @@ $db = mysqli_select_db($conn, "medicine_inventory");
 
   $medId = $_POST['medId'];
 
-  if($medId == ''){
-    $showAlert = true;
-    $message = 'Select An item First';
-  }else{
+
 
   if(isset($_POST['delete'])){
- 
+    
+    if($medId == ''){
+      // $showAlert = true;
+      // $message = 'Select An item First';
+      echo "<script>alert('Select An item First'); window.history.back();</script>";
+    }
+    else{
+
     $sql = "DELETE FROM `med_inventory` WHERE `Med_Id`='$medId'";
 
   
@@ -142,17 +158,17 @@ $db = mysqli_select_db($conn, "medicine_inventory");
 <?php
     // Display JavaScript alert if the flag is set
   
-    if(($dupliAlert) && $dupliAlert) 
-    {
-        echo "<script>alert('medicine name already exist'); window.history.back();</script>";
-    }
-    else if (isset($showDate) && $showDate) {
-      echo "<script>alert('$message1'); window.history.back();</script>";
+    // if(isset($dupliAlert) && $dupliAlert) 
+    // {
+    //     echo "<script>alert('medicine name already exist'); window.history.back();</script>";
+    // }
+    // else if (isset($showDate) && $showDate) {
+    //   echo "<script>alert('$message1'); window.history.back();</script>";
 
-    }else if (isset($showAlert) && $showAlert) {
-      echo "<script>alert('$message'); window.history.back();</script>";
+    // }else  if (isset($showAlert) && $showAlert) {
+    //   echo "<script>alert('$message'); window.history.back();</script>";
 
-    }
+    // }
 
    
 ?>

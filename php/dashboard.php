@@ -11,11 +11,12 @@
 
      <!-- User Validation if user is Admin -->
     <?php 
-    session_start();
-    $admin =  $_SESSION['user_name'];
-
-    if ($admin === 'admin'){
-        echo '<script>
+ 
+    if (isset($_COOKIE['user'])) {
+        $admin = $_COOKIE['user'];
+    
+        if ($admin === 'admin'){
+            echo '<script>
             document.addEventListener("DOMContentLoaded", function() {
                 // Display the button for admins
                 document.getElementById("userHisto").style.display = "block";
@@ -23,6 +24,7 @@
                 document.getElementById("suplier").style.display = " inline-block";
             });
           </script>';
+        }
     }
     ?>
 

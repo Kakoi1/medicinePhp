@@ -14,5 +14,17 @@ function performSearch() {
         });
     }
     
-   
-        
+    function statChange(){
+        var quan = parseFloat(document.getElementById('quantity').value)  
+       if(quan <= 0){
+        document.getElementById('status').value = 'Out of Stock';
+       }else{
+        document.getElementById('status').value = 'Available';
+       }
+      
+    }
+    document.getElementById("status").addEventListener("mousedown", function(e) {
+          e.preventDefault(); // Prevent the default action
+        });
+
+  

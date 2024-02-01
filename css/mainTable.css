@@ -36,7 +36,7 @@ table, th, td {
 
 th, td {
     padding: 12px;
-    text-align: left;
+   text-align: center;
 }
 
 th {
@@ -162,9 +162,9 @@ tr:hover {
  .reportGen{
   background-color: rgba(216, 208, 208);
   border-radius: 8px;
-  height: 70%;
-  max-height: 1500px;
-  width: 800px;
+  height: 60%;
+  max-height: 1000px;
+  width: 900px;
   padding: 10px;
   margin: 0 auto;
   padding: 30px;
@@ -222,4 +222,37 @@ tr:hover {
   color: white;
   background-color: black;
   box-shadow: 2px 1px 4px 3px;
+}
+.editButon {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.delButon {
+ background-color: red;
+ color: white;
+ border: none;
+ padding: 6px 12px;
+ text-align: center;
+ text-decoration: none;
+ display: inline-block;
+ font-size: 12px;
+ cursor: pointer;
+ border-radius: 4px;
+}
+.butoon{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+}
+#tableData{
+  padding: 20px;
 }

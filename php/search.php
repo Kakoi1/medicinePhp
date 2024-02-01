@@ -25,6 +25,7 @@
             <th>Quantity</th>
             <th>Status</th>
             <th>Expire Date</th>
+            <th></th>
         </tr>";
 
     while ($row = $result->fetch_assoc()) {
@@ -35,6 +36,8 @@
                 echo "<td>" . $row["Med_Quantity"] . "</td>";
                 echo "<td>" . $row["Med_status"] . "</td>";
                 echo "<td>" . $row["Med_ExpDate"] . "</td>";
+                echo "<td> <div class ='butoon'><button id = 'edit' class = 'editButon' onclick='openMedupdate()'>Edit</button>   
+                </div></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -47,3 +50,4 @@ $result->close();
 }
 $conn->close();
 ?>
+<script src="..//script/manage.js"></script>
