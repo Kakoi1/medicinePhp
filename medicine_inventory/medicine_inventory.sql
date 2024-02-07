@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 22, 2024 at 07:12 AM
+-- Generation Time: Feb 07, 2024 at 04:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,11 +42,13 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`Acc_Id`, `Acc_username`, `Acc_fullname`, `Acc_password`, `Acc_email`, `Acc_date`, `Acc_time`) VALUES
-(641, '123', '123', 'e466e3494f1d4ce6fb8bd678d45cd801ac10b9ba', '123', '2024-01-22', '11:13:11'),
+(641, '123', '123', 'e466e3494f1d4ce6fb8bd678d45cd801ac10b9ba', '123', '2024-01-25', '17:39:01'),
 (642, '456', '123', 'e466e3494f1d4ce6fb8bd678d45cd801ac10b9ba', '123', '2023-12-27', '17:42:39'),
-(643, 'admin', 'admin', 'd90b5f405979e3170c233147d23187858d61c8f9', 'admin', '2024-01-22', '13:18:49'),
+(643, 'admin', 'admin', 'd90b5f405979e3170c233147d23187858d61c8f9', 'admin', '2024-02-06', '08:36:20'),
 (644, 'roland', 'roland', '7b3c418a5e0fa8d41b4a9376f2f54c66a991f113', 'roland@g.com', '2024-01-22', '13:13:45'),
-(646, '22', '22', 'e41f596ebc76e5878d62d0beb60dc41687f3e96e', 'dsa@f.vo', '2024-01-22', '12:53:46');
+(646, '22', '22', 'e41f596ebc76e5878d62d0beb60dc41687f3e96e', 'dsa@f.vo', '2024-01-22', '12:53:46'),
+(647, 'dsada', 'dsad', '7b474217d975857db8a8f7269408b6db7b7312c5', 'dsa@f.vo', '2024-01-25', '11:17:44'),
+(648, 'dsa', 'dsa', 'e466e3494f1d4ce6fb8bd678d45cd801ac10b9ba', 'lopezrolandshane@gmail.com', '2024-01-26', '11:57:22');
 
 -- --------------------------------------------------------
 
@@ -69,14 +71,14 @@ CREATE TABLE `med_inventory` (
 --
 
 INSERT INTO `med_inventory` (`Med_Id`, `Med_name`, `Med_price`, `Med_Quantity`, `Med_status`, `Med_ExpDate`, `sup_Id`) VALUES
-(23, 'Advil', 20, 4, 'Available', '2020-02-02', 1),
-(24, 'pandesal', 3, 3, 'Available', '2222-02-02', 5),
 (25, 'LPG', 45, 4, 'Available', '2024-01-17', 1),
 (26, 'assers', 9, 0, 'Out of Stock', '2024-01-31', 5),
 (27, 'paracetamol', 11, 0, 'Out of Stock', '2024-05-25', 6),
-(31, 'biogesik', 20, 10, 'Available', '2020-02-02', 5),
+(31, 'biogesik1', 20, 10, 'Available', '2024-11-07', 5),
 (32, 'loperamaid', 8, 12, 'Available', '2025-02-02', 6),
-(34, 'bayotgesik', 20, 20, 'Available', '2024-02-01', 6);
+(34, 'bayotgesiks', 20, 8, 'Available', '2024-02-29', 6),
+(35, 'gg20', 20, 20, 'Available', '2024-01-27', 6),
+(36, 'amroksol', 50, 0, 'Out of Stock', '2024-06-29', 6);
 
 -- --------------------------------------------------------
 
@@ -98,9 +100,9 @@ CREATE TABLE `supplier` (
 
 INSERT INTO `supplier` (`sup_Id`, `sup_Company`, `sup_Address`, `sup_Contact_no.`, `sup_email`) VALUES
 (1, 'unilivers', 'cebus', '0909098s', 'roland@g.coms'),
-(4, 'dsa1', 'dsa', 'dsa', 'dsa'),
 (5, 'das', 'das', 'dasd', 'dasd'),
-(6, 'TGPO', 'cebu', '012012275', 'dsa@f.vo');
+(6, 'TGPO', 'cebu', '012012275', 'dsa@f.vo'),
+(7, 'antis', 'miglanillas', '0909098s', 'lopezrolandshane@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -125,7 +127,8 @@ INSERT INTO `transactions` (`trans_id`, `Med_Id`, `trans_quan`, `trans_total`, `
 (28, 26, 10, 90, 641, '2024-01-16'),
 (29, 27, 12, 22, 641, '2024-01-16'),
 (30, 26, 6, 54, 643, '2024-01-17'),
-(31, 27, 2, 22, 644, '2024-01-22');
+(32, 36, 20, 1000, 643, '2024-01-26'),
+(36, 34, 12, 240, 643, '2024-02-05');
 
 --
 -- Indexes for dumped tables
@@ -166,25 +169,25 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `Acc_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=647;
+  MODIFY `Acc_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=649;
 
 --
 -- AUTO_INCREMENT for table `med_inventory`
 --
 ALTER TABLE `med_inventory`
-  MODIFY `Med_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `Med_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `sup_Id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `sup_Id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `trans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `trans_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables

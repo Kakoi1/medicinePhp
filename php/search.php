@@ -1,3 +1,9 @@
+<style>
+      /* Add your CSS styles here */
+      .selected-row {
+         background-color: #c5e1a5; /* Change this to your desired color */
+      }
+   </style>
 <?php
   $conn = mysqli_connect("localhost", "root", "");
   $db = mysqli_select_db($conn, "medicine_inventory");

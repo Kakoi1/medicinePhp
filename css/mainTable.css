@@ -44,13 +44,13 @@ th {
     color: white;
 }
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
     background-color: #f9f9f9;
-}
+} */
 
-tr:hover {
+/* tr:hover {
     background-color: #f5f5f5;
-}
+} */
 .nabar{  
     background-color: #fc4311;
     width: 100%;
@@ -126,17 +126,17 @@ tr:hover {
     font-weight: bold;
   }
   .genPort{
-    background-color: green;
-    color: white;
+    width: 100px !important;
+    line-height: 1;
   }
-  .searchCon button:hover, .searchCon1 button:hover{
+  .searchCon button:hover{
     color: white;
     background-color: black;
     box-shadow: 2px 1px 4px 3px;
   }
   .reportGen{
-    height: 500px;
-    width: 500px;
+    height: 600px;
+    width: 800px;
     position: fixed;
    top: 0;
    bottom: 0;
@@ -162,8 +162,8 @@ tr:hover {
  .reportGen{
   background-color: rgba(216, 208, 208);
   border-radius: 8px;
-  height: 60%;
-  max-height: 1000px;
+  height: 500px;
+  /* max-height: 1000px; */
   width: 900px;
   padding: 10px;
   margin: 0 auto;
@@ -182,7 +182,7 @@ tr:hover {
 .userHistory{
   background-color: rgba(216, 208, 208);
   border-radius: 8px;
-  height: 70%;
+  height: 500px;
   max-height: 1500px;
   width: 800px;
   padding: 10px;
@@ -256,3 +256,9 @@ tr:hover {
 #tableData{
   padding: 20px;
 }
+/* .form-control{
+  
+} */
+/* [class*="form-control"]{
+  background-color: #2b2a2aaf;
+} */

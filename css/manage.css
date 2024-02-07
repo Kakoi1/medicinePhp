@@ -14,7 +14,7 @@
     }
   }
 
-.medForm input, .medTransac input{
+/* .medForm input, .medTransac input{
     display: flex;
     flex-direction: row;
     width: 90%;
@@ -22,16 +22,17 @@
     font-size: 20px;
     font-weight: bold;
     border-radius: 8px;
-}
+} */
 .medForm h1, .medTransac h1{
     text-align: center;
 }
 .medForm{
-    background-color: rgba(216, 208, 208);
+    background-color: rgba(136, 134, 134, 0.785);
     border-radius: 8px;
-    height: 70%;
+    height: 500px;
     /* max-height: 1500px; */
-    width: 65%;
+    width: 800px;
+    position: fixed;
     padding: 10px;
     margin: 0 auto;
     padding: 30px;
@@ -77,16 +78,16 @@
     display: block;
     margin: 0 auto;
 }
-select{
+/* select{
     width: 90%;
     height: 30px;
     font-size: 20px;
     font-weight: bold;
-}
-.medForm label, .medTransac label{
+} */
+/* .medForm label, .medTransac label{
     font-size: 18px;
     font-weight: bold;
-}
+} */
 
 .submitBut input{
     width: 100px;
@@ -96,7 +97,7 @@ select{
     display: block;
     margin: 0 auto;
 }
-.add{
+/* .add{
     color: white;
     background-color: green;
     box-shadow: 2px 1px 4px 3px;
@@ -152,7 +153,7 @@ select{
 .cancel:hover{
     background-color: white;
     color: red;
-}
+} */
 .addMed{
   width: 100px;
   height: 44px;
@@ -199,11 +200,12 @@ select{
     align-items: center;   
   }
   .transacForm{
-    background-color: rgba(216, 208, 208);
+    background-color: rgba(136, 134, 134, 0.785);
     border-radius: 8px;
-    height: 70%;
-    max-height: 1500px;
-    width: 60%;
+    height: 500px;
+    /* max-height: 1500px; */
+    width: 800px;
+    position: fixed;
     padding: 10px;
     margin: 0 auto;
     padding: 30px;
@@ -212,8 +214,8 @@ select{
     flex-direction: column;
     justify-content: center;
     justify-items: center;
-    line-height: 50px;
-    overflow: auto;
+    line-height: 25px;
+    overflow-y: scroll;
   }
   .alertMessage{
     background-color: rgba(216, 208, 208);

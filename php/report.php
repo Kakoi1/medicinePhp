@@ -25,9 +25,17 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
    <link rel="stylesheet" type="text/css" href="..//css/mainTable.css?v=1"/>
    <link rel="stylesheet" type="text/css" href="..//css/manage.css?v=1" />
    <link rel="stylesheet" type="text/css" href="..//css/tabStyle.css?v=1"/>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+<style>
+      /* Add your CSS styles here */
+      .selected-row {
+         background-color: #c5e1a5; /* Change this to your desired color */
+         font-weight: bold;
+      }
+   </style>
 <body>
-<div class="container">
+<div class="container-lg-12 mt-4"> 
     <div class="inner">
 
     <div class="nabar">
@@ -63,8 +71,8 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
 
              
 
-                <table id="Datatable">
-        <tr>
+    <table id="Datatable" class="table table-striped table-hover">
+        <tr class="table-dark text-center">
             <th>Transaction Id</th>
             <th>Medicine Id</th>
             <th>Medicine Name</th>
@@ -76,11 +84,11 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
             <th>Quantity Sold</th>
             <th>Date</th>
         </tr>
-
+        <tbody>
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr onclick=\"idtoDelete(" . $row["trans_id"] . ")\">";
+                echo "<tr class = 'text-center' onclick=\"idtoDelete(" . $row["trans_id"] . ")\">";
                 echo "<td>" . $row["trans_id"] . "</td>" ;
                 echo "<td>" . $row["Med_Id"] . "</td>";
                 echo "<td>" . $row["Med_name"] . "</td>";
@@ -97,12 +105,13 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
             echo "<tr><td colspan='3'>No data found</td></tr>";
         }
         ?>
+        </tbody>
         </table>
                  
         <div class="searchCon1">
-    <button class="genPort" id="genPort" onclick="openReport()">Generate report</button>
+    <button class="genPort btn-outline-primary" id="genPort" onclick="openReport()">Generate report</button>
     <form action="transacCode.php" method="post">
-    <button class="delete" name="delete" id="delete">Delete</button>
+    <button class="delete btn-outline-warning" name="delete" id="delete">Delete</button>
     <input  class="inputSearch" id="inputSearch" name="inputSearch" type="hidden" readonly>
     </form>
     </div>
@@ -125,8 +134,8 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
     ?>
 
         <label for="tables">Medicines with expiry dates approaching:</label>
-            <table class="tableData" name="tables" id="tables">
-                <tr>
+            <table class="table table-striped table-hover" name="tables" id="tables">
+            <tr class="table-dark text-center">
                 <th>Medicine Id</th>
                 <th>Medicine Name</th>
                 <th>Expire Date</th> 
@@ -134,7 +143,7 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
     <?php
         if ($resulti->num_rows > 0) {
             while ($row = $resulti->fetch_assoc()) {
-                echo"<tr\>";
+                echo"<tr class = 'text-center'>";
                 // echo "<tr onclick=\"populateForm(" . $row["Med_Id"] . ", '" . $row["Med_name"] . "', " . $row["Med_price"] . ", " . $row["Med_Quantity"] . ",'" . $row["Med_status"] . "','" . $row["Med_ExpDate"] . "')\">";
               
                 echo "<td>" . $row["Med_Id"] . "</td>";
@@ -169,8 +178,8 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
             <br>
             <label for="tables">Medicines with Low Stock:</label>
 
-            <table>
-            <tr>
+            <table class="table table-striped table-hover">
+            <tr class="table-dark text-center">
                 <th>Medicine Id</th>
                 <th>Medicine Name</th>
                 <th>Quantity</th> 
@@ -179,7 +188,7 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
     <?php
         if ($resulti->num_rows > 0) {
             while ($row = $resulti->fetch_assoc()) {
-                echo"<tr\>";
+                echo"<tr class = 'text-center'>";
                 // echo "<tr onclick=\"populateForm(" . $row["Med_Id"] . ", '" . $row["Med_name"] . "', " . $row["Med_price"] . ", " . $row["Med_Quantity"] . ",'" . $row["Med_status"] . "','" . $row["Med_ExpDate"] . "')\">";
               
                 echo "<td>" . $row["Med_Id"] . "</td>";
@@ -242,11 +251,11 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
                 <input id="startDate" name="startDate" class="expD" type="date" required placeholder="Start Date">
                 <p style="display:inline"> to </p>
                 <input id="endDate" name="endDate" class="expD" type="date" required placeholder="End Date">
-                <input type="submit" value="Calculate">
+                <input type="submit" value="Calculate" class="btn btn-outline-primary">
                 </form>
             </div>
-        <table id="Datatable">
-        <tr>
+    <table class="table table-striped table-hover">
+        <tr class="table-dark text-center">
             <th>Transaction Id</th>
             <th>Medicine Id</th>
             <th>Medicine Name</th>
@@ -262,7 +271,7 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr onclick=\"idtoDelete(" . $row["trans_id"] . ")\">";
+                echo "<tr class='text-center'>";
                 echo "<td>" . $row["trans_id"] . "</td>" ;
                 echo "<td>" . $row["Med_Id"] . "</td>";
                 echo "<td>" . $row["Med_name"] . "</td>";
@@ -290,5 +299,25 @@ $sql = "SELECT transactions.trans_id, med_inventory.Med_Id, med_inventory.Med_na
         <script src="..//script/manage.js">
 
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <script>
+      document.addEventListener('DOMContentLoaded', function () {
+         var rows = document.querySelectorAll('tbody tr');
+
+         rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+               // Remove the 'selected-row' class from all rows
+               rows.forEach(function (r) {
+                  r.classList.remove('selected-row');
+               });
+
+               // Add the 'selected-row' class to the clicked row
+               row.classList.add('selected-row');
+            });
+         });
+      });
+   </script>
+
 </body>
 </html>

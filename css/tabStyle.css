@@ -52,21 +52,20 @@
 .overlay input[type="date"]{
 height: 40px;
 border-left: 1px;
+font-weight: bold;
 border-right: 1px;
 border-top: 1px;
 width: 170px;
 border-color: white;
 background-color: #32303041;
 border-radius: 5px;
-color: white;
+color: rgb(60, 59, 59);
 font-size: 16px;
 white-space:n;
 }
 .overlay input[type="submit"]{
-    background: #c94609e5;
     height: 35px;
     width: 90px;
-    color: white;
     border-radius: 8px;
     
 }

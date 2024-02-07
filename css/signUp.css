@@ -61,9 +61,9 @@ background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
     color: rgb(107, 104, 104);
 }
-.submits:hover{
+/* .submits:hover{
     color: black;
-}
+} */
 @media screen and (max-width: 540px){
     .form input{
         width: 100% !important;

@@ -8,6 +8,7 @@
     <title>Document</title>
     <!-- <link rel="stylesheet" href="..//css/mainTable.css"> -->
     <link rel="stylesheet" type="text/css" href="..//css/mainTable.css?v=2"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
      <!-- User Validation if user is Admin -->
     <?php 
@@ -29,8 +30,15 @@
     ?>
 
 </head>
+<style>
+      /* Add your CSS styles here */
+      .selected-row {
+         background-color: #c5e1a5; /* Change this to your desired color */
+         font-weight: bold;
+      }
+   </style>
 <body>
-<div class="container"> 
+<div class="container-lg-12 mt-4"> 
         <div class="inner">
 <div class="nabar">
 <p>Medicine Inventory</p>
@@ -73,8 +81,8 @@
     $result = $conn->query($sql);
     ?>
     <div id="tableData">
-<table>
-        <tr>
+<table class="table table-striped table-hover">
+        <tr class="table-dark text-center">
             <th>Med_id</th>
             <th>Name</th>
             <th>Price</th>
@@ -86,7 +94,7 @@
         <?php
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
+                echo "<tr class = 'text-center'>";
                 echo "<td>" . $row["Med_Id"] . "</td>";
                 echo "<td>" . $row["Med_name"] . "</td>";
                 echo "<td>" . $row["Med_price"] . "</td>";
@@ -124,8 +132,10 @@
        
         <div class="userHistory">
         <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" id="closing" onclick="closeHistory()">
-        <table>
-            <tr>
+        <h2>Logged History</h2>
+
+        <table class="table table-striped table-hover">
+        <tr class="table-dark text-center">
                 <th>Account ID</th>
                 <th>Name</th>
                 <th>Date Logged In</th>
@@ -135,7 +145,7 @@
 
         if ($resulti->num_rows > 0) {
             while ($row = $resulti->fetch_assoc()) {
-                echo "<tr>";
+                echo "<tr class = 'text-center'>";
                 echo "<td>" . $row["Acc_Id"] . "</td>";
                 echo "<td>" . $row["Acc_fullname"] . "</td>";
                 echo "<td>" . $row["Acc_date"] . "</td>";
@@ -153,7 +163,28 @@
         </div>
 
     <script src="..//script/search.js"></script>  
-    <script src="..//script/signup.js"></script>      
+    <script src="..//script/signup.js"></script>
+    <script src="..//script/manage.js"></script>     
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+         var rows = document.querySelectorAll('tbody tr');
+
+         rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+               // Remove the 'selected-row' class from all rows
+               rows.forEach(function (r) {
+                  r.classList.remove('selected-row');
+               });
+
+               // Add the 'selected-row' class to the clicked row
+               row.classList.add('selected-row');
+            });
+         });
+      });
+   </script>
  
 </body>
 </html>
