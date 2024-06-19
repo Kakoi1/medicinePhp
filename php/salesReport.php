@@ -1,28 +1,38 @@
-<?php 
-
-$conn = new mysqli("localhost", "root", "", "medicine_inventory");
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "medicine_inventory";
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
+
 $startDate = $_POST['startDate'];
 $endDate = $_POST['endDate'];
 
-if (!empty($startDate) && !empty($endDate)) {
-    // Query to get sales within the specified date range
-    $query = "SELECT SUM(trans_total) AS weekly_sales FROM transactions WHERE trans_date BETWEEN '$startDate' AND '$endDate'";
-    $result = $conn->query($query);
+$query = "SELECT DATE(trans_date) as transDate, SUM(trans_total) as totalSales 
+          FROM transactions 
+          WHERE trans_date BETWEEN '$startDate' AND '$endDate' 
+          GROUP BY DATE(trans_date) 
+          ORDER BY DATE(trans_date)";
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $weeklySales = $row['weekly_sales'];
-        echo "<script>alert('Sales from $startDate to $endDate: $weeklySales units'); window.history.back();</script>";
-    } else {
-        echo "No sales data for the specified date range.";
+$result = $conn->query($query);
+
+if ($result->num_rows > 0) {
+    $data = [];
+    $totalSales = 0;
+    while ($row = $result->fetch_assoc()) {
+        $data['dates'][] = $row['transDate'];
+        $data['sales'][] = $row['totalSales'];
+        $totalSales += $row['totalSales'];
     }
+    $data['totalSales'] = $totalSales; // Include total sales in the response
+    echo json_encode($data);
 } else {
-    echo "Please enter both start and end dates.";
+    echo json_encode(['error' => 'No sales data found for the selected date range']);
 }
 
-
+$conn->close();
 ?>

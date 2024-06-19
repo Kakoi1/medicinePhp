@@ -1,6 +1,7 @@
-function populateForm1(id, company, address, cont, email) {
+function populateSup(id, company, address, cont, email) {
     document.getElementById('supId').value = id;
     document.getElementById('company').value = company;
+    document.getElementById('namer').value = company;
     document.getElementById('address').value = address;
     document.getElementById('cont').value = cont;
     document.getElementById('email').value = email;
@@ -36,4 +37,20 @@ function closeSupForm(){
     document.getElementById('address').value = '';
     document.getElementById('cont').value = '';
     document.getElementById('email').value = '';
+    document.getElementById('categoryForm').reset();
+}
+function populateCat(id, name, desc) {
+    document.getElementById('catId').value = id;
+    document.getElementById('namer').value = name;
+    document.getElementById('desc').value = desc;
+    document.getElementById('archive').style.display = 'block';
+
+}
+function openCat(){
+    document.getElementById('overlaySup').style.display = 'flex';
+    document.getElementById('update').style.display = 'none';
+    document.getElementById('archive').style.display = 'none';
+    document.getElementById('catId').value = '';
+    document.getElementById('namer').value = '';
+    document.getElementById('desc').value = '';
 }

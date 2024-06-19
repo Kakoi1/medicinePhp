@@ -1,7 +1,7 @@
 *{
     font-family: 'Libre Baskerville', serif;
-    transition: all 1s ease;
-    animation: 1s ease-in 0s 1 slideInLeft;
+    /* transition: all 1s ease;
+    animation: 1s ease-in 0s 1 slideInLeft; */
 }
 @keyframes slideInLeft {
     0% {

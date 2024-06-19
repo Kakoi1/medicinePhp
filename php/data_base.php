@@ -1,75 +1,45 @@
-
 <?php
-  $conn = mysqli_connect("localhost", "root", "");
-  $db = mysqli_select_db($conn, "medicine_inventory");
-  
-  $username = $_POST['username'];
-  $name = $_POST['name'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-  $email = $_POST['email'];
-  $repass =$_POST['repass'];
-  $salt = "codeflix";
-  $hashedPassword = sha1($password.$salt);
+$conn = mysqli_connect("localhost", "root", "", "medicine_inventory");
 
-  function validateEmail($email) {
-    // Regular expression for basic email validation
-    $emailRegex = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/';
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    // Check if all required POST variables are set and not empty
+    if(isset($_POST['usern'], $_POST['email'], $_POST['pass'], $_POST['repass']) && 
+       !empty($_POST['usern']) && !empty($_POST['email']) && !empty($_POST['pass']) && !empty($_POST['repass'])) {
+        
+        $username = $_POST['usern'];
+        $email = $_POST['email'];
+        $password = $_POST['pass'];
+        $repass = $_POST['repass'];
+        $salt = "codeflix";
+        $hashedPassword = sha1($password . $salt);
 
-    // Use preg_match to perform the validation
-    if (preg_match($emailRegex, $email)) {
-        return true; // Valid email
+        function validateEmail($email) {
+            return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+        }
+
+        if (validateEmail($email)) {
+            if ($repass != $password) {
+                echo "Password doesn't match. Please try again.";
+            } else {
+                $result = mysqli_query($conn, "SELECT 1 FROM `accounts` WHERE `Acc_username`= '$username' LIMIT 1");
+                if (mysqli_num_rows($result) > 0) {
+                    echo "Username already taken.";
+                } else {
+                    $sql = "INSERT INTO `accounts`(`Acc_username`, `Acc_password`, `Acc_email`, `Acc_date`, `Acc_time`) VALUES ('$username','$hashedPassword','$email', CURDATE(), CURTIME())";
+                    if (mysqli_query($conn, $sql)) {
+                        echo "User registered successfully.";
+                    } else {
+                        echo "Error: " . mysqli_error($conn);
+                    }
+                }
+            }
+        } else {
+            echo "Invalid email.";
+        }
     } else {
-        return false; // Invalid email
+        echo "All fields are required.";
     }
-}
 
-if (validateEmail($email)) {
-
-
-  if(isset($_POST['submits'])){
-
-    $sqli = "SELECT`Acc_username`, `Acc_fullname` FROM `accounts` WHERE `Acc_username`= '$username'";
-    $result= $conn->query($sqli);
-
-  
-
-  if($repass != $password){
-
-    $showAlert = true;
-
-    $message = "Password Doesn't match. Please try again.";
-
-  }
-   
-
-  else if ($result->num_rows > 0) {
-    $showAlert = true;
-    $message = "Username Already Taken";
-  }else{
-
-    $sql = "INSERT INTO `accounts`( `Acc_username`, `Acc_fullname`, `Acc_password`, `Acc_email`, `Acc_date`, `Acc_time`) VALUES ('$username','$name','$hashedPassword','$email', CURDATE(), CURTIME())";
- 
-    if(mysqli_query($conn, $sql)){
-
-     
-      header("Location: login.php");
-      exit();
-    }else{
-
-        echo "some error", $conn->error;
-      }
-   
-    }  
-  }
-} else {
-  echo "<script>alert('Invalid Email'); window.history.back();</script>";
+    mysqli_close($conn);
 }
 ?>
- <?php
-    // Display JavaScript alert if the flag is set
-    if (isset($showAlert) && $showAlert) {
-        echo "<script>alert('$message'); window.history.back();</script>";
-  
-    }
-  ?>

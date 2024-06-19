@@ -1,176 +1,83 @@
-<?php 
- $conn = mysqli_connect("localhost", "root", "");
- $db = mysqli_select_db($conn, "medicine_inventory");
- 
- $medname = $_POST['medName'];
- $price = $_POST['price'];
- $quantity = $_POST['quantity'];
- $status = $_POST['status'];
- $expD =$_POST['expD'];
- $supId = $_POST['supply'];
+<?php
+session_start();
+$userId = $_SESSION['user_id'] ;
+$response = '';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $conn = mysqli_connect("localhost", "root", "", "medicine_inventory");
 
- $currentDate = date("Y-m-d");
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 
+    // Retrieve form data
+    $medId = $_POST['medId'];
+    $medname = $_POST['medName'];
+    $medic = $_POST['medic'];
+    $price = $_POST['price'];
+    $quantity = $_POST['quantity'];
+    $expD = $_POST['expD'];
+    $supId = $_POST['supply'];
+    $categ = $_POST['category'];
+    $action = $_POST['action'];
+    $type = $_POST['medType'];
 
- $sqli= "SELECT * FROM `med_inventory` WHERE `Med_name`='$medname'";
- $result= $conn->query($sqli);
+    if($action == 'archive'){
+        $sql = "UPDATE `med_inventory` SET `archive` = 1 WHERE `Med_Id`= '$medId'";
+        if (mysqli_query($conn, $sql)) {
+            $sql = "INSERT INTO `useraction`(`action`, `dateTime`, `Acc_Id`) VALUES ('Archive Medicine', current_timestamp(), $userId)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
 
- if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $expD)) {
-// name validation
-
-
- if(isset($_POST['add'])){
-  
-  if ($result->num_rows > 0) {
-    // $dupliAlert = true;
-    echo "<script>alert('medicine name already exist'); window.history.back();</script>";
- } 
-//  date validation
- else if ($expD <= $currentDate) {
-  // $showDate = true;
-  $message1 = 'Invalid Date Inputed';
-  echo "<script>alert('Invalid Date Inputed'); window.history.back();</script>";
- }
-// quantity validation and price
- else if ($quantity <= 0){
-  echo '<script>alert("Invalid Quantity Inputed!"); window.history.back();</script>';
- }
- else if ($price <= 0){
-  echo '<script>alert("Invalid Price Inputed!"); window.history.back();</script>';
- }
- else{
-
-   $sql = "INSERT INTO `med_inventory`(`Med_name`, `Med_price`, `Med_Quantity`, `Med_status`, `Med_ExpDate`, `sup_Id`) VALUES ('$medname','$price','$quantity','$status','$expD', '$supId')";
- 
-   if(mysqli_query($conn, $sql)){
-
-    echo "<script>alert('Medicine Added Successfully.');</script>";
-     header("Location: dashboard.php");
-     exit();
-   }else{
-
-       echo "some error", $conn->error;
-     }
-  
-   }
-}  
- }
-?>
-<?php 
- $conn = mysqli_connect("localhost", "root", "");
- $db = mysqli_select_db($conn, "medicine_inventory");
- 
- $medId = $_POST['medId'];
- 
- $medname = $_POST['medName'];
- $price = $_POST['price'];
- $quantity = $_POST['quantity'];
- $status = $_POST['status'];
- $expD =$_POST['expD'];
- $supId = $_POST['supply'];
-
-
- $sqli= "SELECT * FROM `med_inventory` WHERE `Med_name`='$medname'";
- $result= $conn->query($sqli);
-
- if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $expD)) {
-  // name validation
- 
-
- if(isset($_POST['update'])){
-  
-  if ($result->num_rows > 0) {
-    // $dupliAlert = true;
-    echo "<script>alert('medicine name already exist'); window.history.back();</script>";
- } 
-//  date validation
- else if ($expD <= $currentDate) {
-  // $dateAlert = true;
-  // $message = 'Invalid Date Inputed';
-  echo "<script>alert('Invalid Date Inputed'); window.history.back();</script>";
-}
-// ID validation
-elseif($medId == ''){
-  // $showAlert = true;
-  // $message = 'Select An item First';
-  echo "<script>alert('Select An item First'); window.history.back();</script>";
-}
-else if ($price <= 0){
-echo '<script>alert("Invalid Price Inputed!");  window.history.back()</script>';
-}
-else if ($quantity <= 0){
-echo '<script>alert("Invalid Quantity Inputed!"); window.history.back();</script>';
-}
-else{
-
-   $sql = "UPDATE `med_inventory` SET `Med_name` =  '$medname' ,`Med_price`= $price ,`Med_Quantity`= $quantity ,`Med_status`= '$status',`Med_ExpDate`= '$expD',  `sup_Id` = '$supId' WHERE `Med_Id`= '$medId' ";
- 
-   if(mysqli_query($conn, $sql)){
-
-    echo "<script>alert('Medicine updated Successfully.');</script>";
-     header("Location: dashboard.php");
-
-    
-   }else{
-
-       echo "some error", $conn->error;
-     }
-  
-   }  
- }
-}
-?>
-<?php 
-$conn = mysqli_connect("localhost", "root", "");
-$db = mysqli_select_db($conn, "medicine_inventory");
-
-  $medId = $_POST['medId'];
-
-
-
-  if(isset($_POST['delete'])){
-    
-    if($medId == ''){
-      // $showAlert = true;
-      // $message = 'Select An item First';
-      echo "<script>alert('Select An item First'); window.history.back();</script>";
+            $response = 'Archive Success.';
+        }
+    }else if($action === 'restore'){
+        $sql = "UPDATE `med_inventory` SET `archive` = 0 WHERE `Med_Id`= '$medId'";
+        if (mysqli_query($conn, $sql)) {
+            $sql = "INSERT INTO `useraction`(`action`, `dateTime`, `Acc_Id`) VALUES ('Restore Medicine', current_timestamp(), $userId)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $response = 'Restore Success.';
+        }
     }
     else{
+    // Check if the medicine name is being changed
+    if ($medic !== $medname) {
+        $sqli = "SELECT * FROM `med_inventory` WHERE `Med_name`='$medname'";
+        $result = $conn->query($sqli);
 
-    $sql = "DELETE FROM `med_inventory` WHERE `Med_Id`='$medId'";
+        if ($result->num_rows > 0) {
+            $response = 'Medicine name already exists.';
+        }
+    }
 
-  
-    if(mysqli_query($conn, $sql)){
- 
-     echo "<script>alert('Medicine updated Successfully.');</script>";
-      header("Location: dashboard.php");
- 
-     
-    }else{
- 
-        echo "some error", $conn->error;
-      }
+    // Perform validations
+    if ($response === '') {
+        if (empty($expD) || strtotime($expD) === false || strtotime($expD) <= time()) {
+            $response = 'Invalid expiry date.';
+        } else if ($medId == '') {
+            $response = 'Select an item first.';
+        } else if ($price <= 0) {
+            $response = 'Invalid price input.';
+        } else if ($quantity <= 0) {
+            $response = 'Invalid quantity input.';
+        } else {
+            // Update database with form data
+            $sql = "UPDATE `med_inventory` SET `Med_name` = '$medname', category = '$categ', type = '$type', `Med_price`= $price, `Med_Quantity`= $quantity, `Med_status`= 'Available', `Med_ExpDate`= '$expD', `sup_Id` = '$supId' WHERE `Med_Id`= '$medId'";
+            if (mysqli_query($conn, $sql)) {
+                $sql = "INSERT INTO `useraction`(`action`, `dateTime`, `Acc_Id`) VALUES ('update Medicine', current_timestamp(), $userId)";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $response = 'Medicine updated successfully.';
+            } else {
+                $response = 'Some error occurred: ' . $conn->error;
+            }
+        }
+    }
+
    
-     
-  }
 }
+mysqli_close($conn);
+}
+
+echo $response;
 ?>
-<?php
-    // Display JavaScript alert if the flag is set
-  
-    // if(isset($dupliAlert) && $dupliAlert) 
-    // {
-    //     echo "<script>alert('medicine name already exist'); window.history.back();</script>";
-    // }
-    // else if (isset($showDate) && $showDate) {
-    //   echo "<script>alert('$message1'); window.history.back();</script>";
-
-    // }else  if (isset($showAlert) && $showAlert) {
-    //   echo "<script>alert('$message'); window.history.back();</script>";
-
-    // }
-
-   
-?>
-
-

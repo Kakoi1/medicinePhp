@@ -1,7 +1,7 @@
 *{
     font-family: 'Libre Baskerville', serif;
-    transition: all 1s ease;
-    animation: 1s ease-in 0s 1 slideInLeft;
+    /* transition: all 1s ease;
+    animation: 1s ease-in 0s 1 slideInLeft; */
 }
 @keyframes slideInLeft {
     0% {
@@ -29,22 +29,23 @@
 .medForm{
     background-color: rgba(136, 134, 134, 0.785);
     border-radius: 8px;
-    height: 500px;
+    height: 700px;
     /* max-height: 1500px; */
     width: 800px;
-    position: fixed;
+    /* position: fixed; */
     padding: 10px;
     margin: 0 auto;
     padding: 30px;
     margin-top: 120px;  
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: center;
-    justify-items: center;
+    justify-content: space-around;
+    justify-items: center; */
     line-height: 25px;
-    overflow-y: scroll;
+    overflow: auto;
 
   }
+
   .overlayMed{
     position: fixed;
     top: 0;
@@ -60,9 +61,13 @@
 .submitBut{
     display: flex; 
      justify-content: space-evenly; 
-    padding: 20px;
+    padding: 30px;
     width: 100%;
     text-align: center;
+}
+.submitBut input[type = 'submit']{
+  width: 100px;
+  height: 35px;
 }
 .waylabot{
     display: flex; 
@@ -158,9 +163,9 @@
   width: 100px;
   height: 44px;
   border-radius: 10px 10px 10px 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  /* background-color: #4caf50; */
+  /* color: white; */
+  /* border: none; */
   font-size: 14px;
   margin-right: 10px;
   cursor: pointer;
@@ -182,7 +187,6 @@
     align-items: center;   
   }
   .supAdd{
-    height: 100%;
     display: flex;
     align-items: center;
     padding: 20px 0px 0px 20px;
@@ -255,3 +259,204 @@
     float: left;
     width: 50%;
   }
+  .checkout{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    display: none;
+    justify-content: center;
+    align-items: center;   
+  }
+  .overCheck{
+    background-color: rgba(136, 134, 134, 0.785);
+    border-radius: 8px;
+    height: 500px;
+    /* max-height: 1500px; */
+    width: 1000px;
+    position: fixed;
+    padding: 10px;
+    margin: 0 auto;
+    padding: 30px;
+    margin-top: 120px;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    line-height: 25px;
+    overflow-y: scroll;
+  }
+  .medicine button, .btns{
+    color: white;
+    background: #dc3545;
+    border-radius: 8px;
+    border: white;
+    height: 35px;
+    width: 100px;
+  }
+        /* Add your CSS styles here */
+        .selected-row {
+          background-color: #c5e1a5; /* Change this to your desired color */
+          font-weight: bold;
+       }
+ 
+       [class*="form-control"]{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px;
+      }   
+ 
+      [class*="input-group-text"]{
+         font-weight: bold;
+         border-radius: 8px;
+      }
+     #price{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     #medName{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     #status{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;;
+     }
+     #quantity{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     #expD{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     #tPrice{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     #change{
+         background-color: #2b2a2aaf;
+         color: white;
+         border: solid 1px;
+         border-radius: 8px,0px,8px,8px;
+     }
+     td{
+         
+     }
+     .items{
+         display: none;
+         background: #3843E1;
+         color: white;
+         height: 45px;
+         width: 120px;
+         font-size: 16px;
+         border-radius: 8px;
+     }
+     .entry{
+         display: flex;
+         flex-direction: row;
+         margin-bottom: 20px;
+         padding: 8px;
+         justify-content: space-between;
+         border: solid 2px;
+         border-color: white;
+ 
+        
+     }
+     .entry input{
+         text-align: center;
+         height: 30px;
+         border: none;
+         background-color: transparent;
+         font-size: 20px;
+         color: white;
+         
+     }
+     .entry button{
+         color: white;
+         background-color: red;
+         border-radius: 8px;
+         height: 30px;
+     }
+     .labels{
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         margin-bottom: 10px;
+         width: 700px;
+         color: white;
+         text-align: center;
+     }
+     .rows{
+         display: flex;
+         justify-content: space-between;
+         margin-top: 15px;
+     }
+     .rows input{
+         text-align: center;
+         height: 30px;
+         border: none;
+         background-color: transparent;
+         font-size: 20px;
+         color: white;
+     }
+     .rows label{
+         font-size: 20px;
+         color: white;
+     }
+   
+     #buyy{
+         background-color: #3843E1;
+         color: white;
+         height: 40px;
+         font-size: 16px;
+         font-weight: bold;
+         border-radius: 8px;
+         width: 120px;
+         margin-right: 15px;
+     }
+     #cael{
+         background-color: white;
+         color: black;
+         height: 40px;
+         font-size: 16px;
+         font-weight: bold;
+         border-radius: 8px;
+         width: 120px;
+     }
+     #buyy:hover{
+         background-color: white;
+         color: black;
+         height: 40px;
+         font-size: 16px;
+         font-weight: bold;
+         border-radius: 8px;
+         width: 120px;
+     }
+     #cael:hover{
+         background-color: #3843E1;
+         color: white;
+         height: 40px;
+         font-size: 16px;
+         font-weight: bold;
+         border-radius: 8px;
+         width: 120px;
+         margin-right: 15px;
+     }
+      

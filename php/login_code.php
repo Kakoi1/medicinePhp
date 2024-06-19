@@ -1,68 +1,60 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "");
-  $db = mysqli_select_db($conn, "medicine_inventory");
+session_start();
 
-  $uname = $_POST["uname"];
-  $pass = $_POST["pass"]; 
-  $salt = "codeflix";
-  $hashedPassword = sha1($pass.$salt);
-  $accId = $id;
-    if(isset($_POST['login'])){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Check if username and password are set and not empty
+    if (isset($_POST["users"], $_POST["passw"]) && !empty($_POST["users"]) && !empty($_POST["passw"])) {
+        $conn = mysqli_connect("localhost", "root", "", "medicine_inventory");
 
-      
-
-        $sql = "SELECT * FROM accounts WHERE Acc_username = '$uname' AND Acc_password = '$hashedPassword'";
-         $result= $conn->query($sql);
-
-         if ($result->num_rows > 0) {
-            // User found
-            echo "Login successful!";
-            
-            // Add code to redirect or perform further actions after successful login
-            while ($row = $result->fetch_assoc()) {
-                $id = $row['Acc_Id'];
-                $username = $row['Acc_username'];               
-            }
-            
-            
-            // echo "<script>var data = $id;</script>";
-            // echo "<script>console.log(data); </script>";
-            // echo '<script src="..//script/signup.js"></script>';
-            // echo "<script>gago(data);</script>";
-
-
-            $sqli = "UPDATE `accounts` SET `Acc_date`= CURDATE(),`Acc_time`= CURTIME() WHERE `Acc_username` = '$uname'";
-            $conn->query($sqli);
-
-            session_start();
-            $_SESSION['user_id'] = $id;
-            $_SESSION['user_name'] = $username;
-            setcookie('user', $username, time() + 24*3600, '/');
-
-            header('Location: dashboard.php');
-
-        } else {
-
-            // $alertMessage = "Incorrect username or password. Please try again.";
-            $showAlert = true;
-
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
 
+        $uname = $_POST["users"];
+        $pass = $_POST["passw"];
 
+        $salt = "codeflix";
+        $hashedPassword = sha1($pass . $salt);
+
+        $sql = "SELECT * FROM accounts WHERE Acc_username = ? AND Acc_password = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("ss", $uname, $hashedPassword);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+
+            $_SESSION['user_id'] = $row['Acc_Id'];
+            $_SESSION['user_name'] = $row['Acc_username'];
+            setcookie('user', $row['Acc_username'], time() + 24 * 3600, '/');
+
+     if($row['Acc_status'] == 'approved'){
+        echo 'Login successful!';
+     }else if($row['Acc_status'] == 'pending'){
+        echo 'Account is Still pending for approval';
+     }else if($row['Acc_status'] == 'rejected'){
+        echo 'Account is Rejected';
+     }else if($row['Acc_status'] == 'admin'){
+        echo 'Admin Login successful!';
+
+     }
+
+
+        exit();
+        } else {
+            echo "Incorrect username or password. Please try again.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    } else {
+        echo "Username and password are required.";
     }
+}
 ?>
-
- 
-
-<?php
-    // Display JavaScript alert if the flag is set
-    if (isset($showAlert) && $showAlert) {
-        echo "<script>alert('Incorrect username or password. Please try again.'); window.history.back();</script>";
-  
-    }
-    // if ($loggedIn) {
-    //     // Embed a script to perform client-side redirection
-    //     echo '<meta http-equiv="refresh" content="0;url=dashboard.php">';
-    // }
-  ?>
-

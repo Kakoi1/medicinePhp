@@ -1,78 +1,58 @@
 <?php 
- $conn = mysqli_connect("localhost", "root", "");
- $db = mysqli_select_db($conn, "medicine_inventory");
- 
- 
- $company = $_POST['company'];
- $address = $_POST['address'];
- $contact = $_POST['cont'];
- $email =$_POST['email'];
-
- $sqli= "SELECT * FROM `supplier` WHERE `sup_Company`='$company'";
- $result= $conn->query($sqli);
-
- function validateEmail($email) {
-  // Use filter_var for email validation
-  return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
-}
-
-
- if (validateEmail($email)) {
-  
- if(isset($_POST['add'])){
- 
-  if ($result->num_rows > 0) {
-    $dupliAlert = true;
- }
- 
-
-else{
-
-   $sql = "INSERT INTO `supplier`( `sup_Company`, `sup_Address`, `sup_Contact_no.`, `sup_email`) VALUES ('$company','$address','$contact','$email')";
- 
-   if(mysqli_query($conn, $sql)){
-
-    echo "<script>alert('Medicine Added Successfully.');</script>";
-     header("Location: dashboard.php");
-     exit();
-   }else{
-
-       echo "some error", $conn->error;
-     }
-  
-   }
-  }else{
-    $alertEmail = true;
+$conn = new mysqli("localhost", "root", "", "medicine_inventory");
+if($_SERVER['REQUEST_METHOD'] == "POST"){
+  $supId = $_POST['supId'] ?? '';
+  $company = $_POST['company'] ?? '';
+  $address = $_POST['address'] ?? '';
+  $contact = $_POST['cont'] ?? '';
+  $email = $_POST['email'] ?? '';
+  $action = $_POST['action'] ?? '';
+  $namer = $_POST['namer'] ?? '';
+  $response = 0;
+  $sqli= "SELECT * FROM `supplier` WHERE `sup_Company`='$company'";
+  $result= $conn->query($sqli);
+  function validateEmail($email) {
+    // Use filter_var for email validation
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
   }
-}  
 
-?>
-<?php 
- $conn = mysqli_connect("localhost", "root", "");
- $db = mysqli_select_db($conn, "medicine_inventory");
+if($action =='insert'){
  
- $supId = $_POST['supId'];
- 
- $company = $_POST['company'];
- $address = $_POST['address'];
- $contact = $_POST['cont'];
- $email =$_POST['email'];
-
- $sqli= "SELECT * FROM `supplier` WHERE `sup_Company`='$company'";
- $result= $conn->query($sqli);
-
 
 
    if (validateEmail($email)) {
-    
+    if ($result->num_rows > 0) {
+      echo "Company name already exist";
+  
+   }
+  else{
+ 
+    $sql = "INSERT INTO `supplier`( `sup_Company`, `sup_Address`, `sup_Contact_no.`, `sup_email`) VALUES ('$company','$address','$contact','$email')";
+    if(mysqli_query($conn, $sql)){
+     echo "Supplier Added Successfully.";
+    }else{
+ 
+        echo "some error", $conn->error;
+      }
+    }
+   }else{
+     echo "Ivalid Email";
+   }
+ 
+  }else if($action == 'update'){
 
-    if(isset($_POST['update'])){
-
+    if($company !== $namer){
       if ($result->num_rows > 0) {
-        $dupliAlert = true;
-    
-     }
-    else if($supId == ''){
+        $response = 1;
+        echo "Supplier name Already exist";
+      }
+    }  
+
+    if($response >= 0){
+
+      if (validateEmail($email)) {
+
+ if($supId == ''){
         $showAlert = true;
      }
     
@@ -81,9 +61,7 @@ else{
       
         if(mysqli_query($conn, $sql)){
 
-          echo "<script>alert('Medicine updated Successfully.');</script>";
-          header("Location: dashboard.php");
-
+          echo "Medicine updated Successfully.";
           
         }else{
 
@@ -92,54 +70,43 @@ else{
   
    }  
     }else{
-      $alertEmail = true;
+      echo "Ivalid Email";
   }
-}
-?>
-<?php 
-$conn = mysqli_connect("localhost", "root", "");
-$db = mysqli_select_db($conn, "medicine_inventory");
+  }
 
-$supId = $_POST['supId'];
-
-
-  if(isset($_POST['delete'])){
+}else if($action == 'archive'){
+  $stmt = $conn->prepare("UPDATE supplier SET archive=1 WHERE sup_Id = $supId");
+  $stmt->execute();
+  echo 'Archive Success';
+}else if($action == 'restore'){
+  $stmt = $conn->prepare("UPDATE supplier SET archive=0 WHERE sup_Id = $supId");
+  $stmt->execute();
+  echo 'Restore Success';
+}else if($action == 'delete'){
     
     
-  if($supId == ''){
-    $showAlert = true;
-  }else{
-
-    $sql = "DELETE FROM `supplier` WHERE `sup_Id`= '$supId'";
-
-  
-    if(mysqli_query($conn, $sql)){
- 
-     echo "<script>alert('Medicine updated Successfully.');</script>";
-      header("Location: dashboard.php");
- 
-     
+    if($supId == ''){
+      echo "Select a Supplier first First";
     }else{
- 
-        echo "some error", $conn->error;
-      }
+      try {
+      $sql = "DELETE FROM `supplier` WHERE `sup_Id`= '$supId'";
+  
+    
+      if(mysqli_query($conn, $sql)){
    
+       echo "Supplier deleted Successfully.";
+   
+       
+      }else{
+   
+          echo "some error", $conn->error;
+        }
      
+      } catch (mysqli_sql_exception $e) {
+        // Handle exception caused by foreign key constraint violation
+        echo "Failed to delete medicine: Foreign key constraint violation.";
+    }
+    }
   }
 }
-?>
-<?php
-    // Display JavaScript alert if the flag is set
-    
-    if(isset($dupliAlert) && $dupliAlert) 
-    {
-        echo "<script>alert('Company name already exist'); window.history.back();</script>";
-    }
-    else if (isset($showAlert) && $showAlert) {
-        echo "<script>alert('Select a Supplier first First'); window.history.back();</script>";
-  
-    }else if (isset($alertEmail) && $alertEmail) {
-      echo "<script>alert('Ivalid Email'); window.history.back();</script>";
-
-  }
 ?>
