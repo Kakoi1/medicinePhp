@@ -58,6 +58,14 @@ if ($conn->connect_error) {
         'Lozenges',
         'Powders'
     ];
+    $sql = "SELECT COUNT(*) AS completed_orders_count FROM orders WHERE status = 'Completed'";
+$result = $conn->query($sql);
+$completedOrdersCount = 0;
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $completedOrdersCount = $row['completed_orders_count'];
+}
 
 ?>
 
@@ -180,10 +188,34 @@ if ($conn->connect_error) {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: white;
+            background-color: #575454c2;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             z-index: 2; /* Ensures the form is above the overlay */
+        }
+        .overlayed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 70%;
+            /* max-width: 600px; */
+        }
+
+        .closed-btn {
+            float: right;
+            cursor: pointer;
         }
    </style>
 <body >
@@ -263,9 +295,14 @@ if ($conn->connect_error) {
     <button class="btn btn-outline-primary me-2 addmed" id="addMed" onclick="openMedadd()">Add Medicine</button>
     <button class="btn btn-outline-primary me-2" id="arcMed" onclick="fetchArchive(1,'medicine')">Archived Medicine</button>
     <button type="button" id="requestRestockBtn" class="btn btn-primary me-2" data-toggle="modal" data-target="#restockRequestModal">
-    Request Restock
+    Request Restock 
 </button>
     <button class="btn btn-primary" id="fetchNone" onclick="window.location.href = 'mangeStock.php'">Refresh</button>
+    <button class="btn btn-primary" id="fetchOrder" onclick="openReplenish()">Replenish Stock  
+    <?php if ($completedOrdersCount > 0): ?>
+                <span class="badge bg-danger "><?php echo $completedOrdersCount; ?></span>
+    <?php endif; ?>
+    </button>
     </div>
     </div>
  
@@ -477,24 +514,24 @@ if ($conn->connect_error) {
     </div>
     <div id="overlayer"></div>
     <div id="restockRequestFormContainer" style="display: none;">
-    <h2>Request Restock</h2>
+    <h2 style="color:white;">Request Restock</h2>
         <form id="restockRequestForm">
-            <div class="form-group">
+        <div class="input-group mb-4">
                 <input type="hidden" name="usID" id="usID" value="<?php echo $userID;?>">
-                <label for="medicine">Medicine:</label>
-                <select class="form-control" id="medicine" name="medicine" required>
+                <span class="input-group-text" id="basic-addon3">Medicine:</span>
+                <select class="form-control" id="medicine" name="medicine" aria-describedby="basic-addon3" required>
                 <?php foreach ($medicines as $meds): ?>
                     <option value="<?= $meds['Med_Id'] ?>"><?= $meds['Med_name'] ?></option>
                 <?php endforeach; ?>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="quantity">Quantity:</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" required>
+            <div class="input-group mb-4">
+            <span class="input-group-text" id="basic-addon3">Quantity:</span>
+                <input type="number" class="form-control" id="quantity" name="quantity" aria-describedby="basic-addon3" required>
             </div>
-            <div class="form-group">
-                <label for="comments">Comments:</label>
-                <textarea class="form-control" id="comments" name="comments"></textarea>
+            <div class="input-group mb-4">
+            <span class="input-group-text" id="basic-addon3">Comment:</span>
+                <textarea class="form-control" id="comments" name="comments" aria-describedby="basic-addon3" ></textarea>
             </div>
             <br>
             <button type="button" id="submitRequestBtn" class="btn btn-primary">Submit Request</button>
@@ -502,6 +539,13 @@ if ($conn->connect_error) {
         </form>
     </div>
 
+    <div class="overlayed" id="replenishOverlay">
+    <div class="popup-content">
+        <img src="..//image/icons8-close-50.png" alt="close" height="20px" width="20px" class="closed-btn" onclick="closeReplenishPopup()">
+        <h2>Replenish Stock</h2>
+        <div id="replenishContent"></div>
+    </div>
+</div>
 </div>
 
 <script>
@@ -899,7 +943,54 @@ $(document).on('click', '.restore-btn', function(event) {
         updateSelectedOptions();
         // displaySelectedOptions();
     }
+  // Fetch the count of medicines with completed orders and update the button
+
+function openReplenish(){
+    $.ajax({
+        url: 'fetchCompletedOrders.php',
+        type: 'GET',
+        success: function(response) {
+            $('#replenishContent').html(response);
+            document.getElementById("replenishOverlay").style.display = 'flex';
+        }
+    });
+}
+
+function closeReplenishPopup() {
+    $('#replenishOverlay').hide();
+}
+
+// Replenish the stock when the replenish button is clicked
+$(document).on('click', '.replenish-btn', function() {
+    var medId = $(this).data('medid');
+    var orderId = $(this).data('orderid');
+    var quantity = $(this).data('quantity');
+
+    $.ajax({
+        url: 'manage_code.php',
+        type: 'POST',
+        data: {
+            action: 'replenish',
+            medId: medId,
+            orderId: orderId,
+            quantity: quantity
+        },
+        success: function(response) {
+            if (response.trim() === "Stock replenished successfully.") {
+                        // Redirect to dashboard
+                        alert(response);
+                        location.reload();
+                        openReplenishPopup();
+                    }else{
+                        alert(response);
+                    }
+
+        }
+    });
+});
+
 </script>
+    
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </div>
