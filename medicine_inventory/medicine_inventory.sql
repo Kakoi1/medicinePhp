@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2024 at 05:51 AM
+-- Generation Time: Jun 22, 2024 at 08:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,9 @@ INSERT INTO `categories` (`id`, `name`, `description`, `archive`) VALUES
 (6, 'Antibacterials', 'Drugs used to treat infections.', 0),
 (7, 'Sedatives', 'Same as Antianxiety drugs', 0),
 (8, 'Vitamins', 'Chemicals essential in small quantities for good health. Some vitamins are not manufactured by the body, but adequate quantities are present in a normal diet. People whose diets are inadequate or who have digestive tract or liver disorders may need to take supplementary vitamins.', 0),
-(9, 'Vitamins1', 'Drugs that suppress anxiety and relax muscles (sometimes called anxiolytics, sedatives, or minor tranquilizers)', 0);
+(9, 'Vitamins1', 'Drugs that suppress anxiety and relax muscles (sometimes called anxiolytics, sedatives, or minor tranquilizers)', 0),
+(10, 'anti-inflammatory', 'block certain substances in the body that cause inflammation.', 0),
+(11, 'antibiotics', 'fight bacterial infections', 0);
 
 -- --------------------------------------------------------
 
@@ -103,25 +105,25 @@ CREATE TABLE `med_inventory` (
 --
 
 INSERT INTO `med_inventory` (`Med_Id`, `Med_name`, `category`, `type`, `Med_price`, `Med_Quantity`, `Med_status`, `Med_ExpDate`, `sup_Id`, `archive`) VALUES
-(27, 'biogesik', 'pain killers, Antifungals', '', 11, 58, 'Available', '2024-05-25', 1, 0),
-(31, 'biogesik1', '0', '', 20, 5, 'Available', '2024-11-07', 5, 0),
-(32, 'loperamaid', '0', '', 8, 0, 'Out of Stock', '2025-02-02', 6, 0),
-(36, 'amroksol', '0', '', 50, 0, 'Out of Stock', '2024-06-29', 6, 0),
-(108, 'Acetaminophen', 'Antifungals, pain killers', '', 12, 107, 'Available', '2024-08-21', 7, 0),
-(109, 'Amlodipine', '0', '', 21, 110, 'Available', '2024-09-26', 5, 0),
-(110, 'Amoxicillin', '0', '', 10, 120, 'Available', '2025-02-28', 6, 0),
-(111, 'Lyrica', '0', '', 20, 100, 'Available', '2025-01-30', 5, 0),
-(112, 'Viagra', 'Vitamins1, Antianxiety Drugs', '', 15, 146, 'Available', '2024-09-26', 6, 0),
+(27, 'biogesic', 'Paracetamol, anti-inflammatory', 'Capsules', 11, 58, 'Available', '2025-01-28', 1, 0),
+(31, 'Cephalexin', 'antibiotics', 'Capsules', 20, 5, 'Available', '2024-11-07', 5, 0),
+(32, 'loperamaid', '0', '', 8, 10, 'Out of Stock', '2025-02-02', 6, 0),
+(36, 'amroksol', '0', '', 50, 24, 'Out of Stock', '2024-06-29', 6, 0),
+(108, 'Acetaminophen', 'Antifungals, pain killers', '', 12, 50, 'Available', '2024-08-21', 7, 0),
+(109, 'Amlodipine', '0', '', 21, 50, 'Available', '2024-09-26', 5, 0),
+(110, 'Amoxicillin', 'anti-inflammatory, Paracetamol', 'Capsules', 10, 120, 'Available', '2025-02-28', 6, 0),
+(111, 'Lyrica', 'anti-inflammatory', 'Capsules', 20, 10, 'Available', '2025-01-30', 5, 0),
+(112, 'Viagra', 'Vitamins1, Antianxiety Drugs', '', 15, 50, 'Available', '2024-09-26', 6, 0),
 (113, 'Trazodone', 'pain killers, Antianxiety Drugs', 'Liquids', 13, 48, 'Available', '2024-12-26', 7, 0),
 (114, 'Naproxen', 'pain killers, Paracetamol, Antianxiety Drugs', '', 14, 28, 'Available', '2024-11-27', 7, 0),
-(115, 'Advil', 'pain killers', '', 12, 96, 'Available', '2024-10-29', 5, 0),
-(116, 'profins', 'pain killer', '', 12, 98, 'Available', '2024-07-24', 6, 0),
-(117, 'dsa321', 'Antifungals,pain killers, Antianxiety Drugs, Vitamins,Sedatives', 'Capsules', 15, 7, 'Available', '2024-11-28', 9, 0),
-(118, 'yesy12', 'Antifungals, pain killers', 'Capsules', 12, 18, 'Available', '2025-01-23', 9, 0),
-(119, 'dsada1', 'pain killer', '', 12, 12, 'Available', '2024-05-25', 9, 0),
-(127, 'dsa212', 'Antifungals', '', 12, 12, 'Available', '2024-07-17', 9, 0),
-(128, 'tolfinol', 'Antianxiety Drugs, Vitamins1', '', 20, 10, 'Available', '2025-04-22', 13, 0),
-(130, 'fafa', 'Sedatives', 'Liquids', 12, 1, 'Available', '2024-10-17', 11, 0);
+(115, 'Advil', 'pain killers', 'Capsules', 12, 96, 'Available', '2024-10-29', 5, 0),
+(116, 'profins', 'pain killer', 'Inhalers', 12, 98, 'Available', '2024-07-24', 6, 0),
+(117, 'dsa321', 'Antifungals,pain killers, Antianxiety Drugs, Vitamins,Sedatives', 'Capsules', 15, 7, 'Available', '2024-11-28', 9, 1),
+(118, 'yesy12', 'Antifungals, pain killers', 'Capsules', 12, 18, 'Available', '2025-01-23', 9, 1),
+(119, 'dsada1', 'pain killer', '', 12, 12, 'Available', '2024-05-25', 9, 1),
+(127, 'dsa212', 'Antifungals', '', 12, 12, 'Available', '2024-07-17', 9, 1),
+(128, 'tolfinol', 'Antianxiety Drugs, Vitamins1', 'Capsules', 20, 10, 'Available', '2025-04-22', 13, 0),
+(130, 'Morphine', 'Sedatives, pain killers', 'Liquids', 12, 1, 'Available', '2024-10-17', 11, 0);
 
 -- --------------------------------------------------------
 
@@ -149,8 +151,8 @@ INSERT INTO `orders` (`order_id`, `med_id`, `quantity`, `arrival_date`, `sup_id`
 (1, 36, 200, '2024-06-01', 6, 643, '2024-05-28 09:24:16', 'Pending', 0),
 (2, 36, 200, '2024-08-29', 6, 643, '2024-05-28 09:37:19', 'Pending', 0),
 (3, 36, 50, '2024-06-01', 6, 643, '2024-05-28 09:49:20', 'Completed', 1),
-(4, 32, 10, '2024-05-04', 6, 643, '2024-05-28 09:57:41', 'Completed', 1),
-(5, 36, 12, '2024-05-01', 6, 643, '2024-05-28 10:21:33', 'Completed', 1),
+(4, 32, 10, '2024-05-04', 6, 643, '2024-05-28 09:57:41', 'Replenished', 1),
+(5, 36, 12, '2024-05-01', 6, 643, '2024-05-28 10:21:33', 'Replenished', 1),
 (6, 32, 122, '2024-11-26', 6, 643, '2024-06-18 02:38:47', 'Pending', 0);
 
 -- --------------------------------------------------------
@@ -329,7 +331,24 @@ INSERT INTO `useraction` (`id`, `action`, `dateTime`, `Acc_Id`) VALUES
 (44, 'update Medicine', '2024-06-17 06:31:23', 650),
 (45, 'Add Transaction', '2024-06-17 06:52:58', 650),
 (46, 'Add Transaction', '2024-06-18 02:52:25', 650),
-(47, 'Restock request', '2024-06-18 03:36:11', 650);
+(47, 'Restock request', '2024-06-18 03:36:11', 650),
+(48, 'Replenish Medicine', '2024-06-19 11:12:35', 650),
+(49, 'update Medicine', '2024-06-22 06:17:21', 650),
+(50, 'Archive Medicine', '2024-06-22 06:17:35', 650),
+(51, 'Archive Medicine', '2024-06-22 06:17:51', 650),
+(52, 'Archive Medicine', '2024-06-22 06:18:00', 650),
+(53, 'update Medicine', '2024-06-22 06:18:09', 650),
+(54, 'update Medicine', '2024-06-22 06:18:23', 650),
+(55, 'Archive Medicine', '2024-06-22 06:18:45', 650),
+(56, 'Add Category', '2024-06-22 06:20:16', 650),
+(57, 'update Medicine', '2024-06-22 06:21:11', 650),
+(58, 'update Medicine', '2024-06-22 06:22:22', 650),
+(59, 'Add Category', '2024-06-22 06:22:52', 650),
+(60, 'update Medicine', '2024-06-22 06:23:07', 650),
+(61, 'update Medicine', '2024-06-22 06:24:23', 650),
+(62, 'update Medicine', '2024-06-22 06:24:46', 650),
+(63, 'update Medicine', '2024-06-22 06:24:55', 650),
+(64, 'update Medicine', '2024-06-22 06:25:07', 650);
 
 --
 -- Indexes for dumped tables
@@ -406,7 +425,7 @@ ALTER TABLE `accounts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `med_inventory`
@@ -442,7 +461,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `useraction`
 --
 ALTER TABLE `useraction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- Constraints for dumped tables
